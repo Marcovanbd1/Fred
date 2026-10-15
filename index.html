@@ -7,9 +7,7 @@
 <meta name="description" content="Six free, gentle Sunday morning yoga classes in Weymouth, taught by local NHS clinician Fred Burnham. No experience needed. Book by email or phone.">
 <!--
   EDITING NOTES (not shown on the page)
-  1. Places: change PLACES_BOOKED near the bottom of this file. When it reaches 15,
-     the page switches to "Join the waiting list" automatically.
-  2. Fred's photo is embedded in this file, so the page works as a single file on Netlify.
+  Fred's photo is embedded in this file, so the page works as a single file on Netlify.
 -->
 <style>
   :root{
@@ -61,10 +59,6 @@
 
   /* Booking card */
   .book-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);border-top:6px solid var(--clay);padding:28px}
-  .places{display:flex;align-items:center;gap:12px;margin-bottom:6px}
-  .places strong{font-family:Georgia,serif;font-size:1.6rem;color:var(--clay);line-height:1}
-  .bar{height:10px;background:var(--sand-deep);border-radius:999px;overflow:hidden;margin:10px 0 18px}
-  .bar span{display:block;height:100%;background:var(--clay);border-radius:999px}
   .book-card .btn{width:100%;justify-content:center;margin-bottom:12px}
   .book-card .small-print{font-size:.9rem;color:var(--muted);margin:6px 0 0}
   .when{list-style:none;padding:0;margin:0 0 20px;border-top:1px solid var(--line)}
@@ -169,8 +163,7 @@
 
       <aside class="book-card" id="book" aria-labelledby="book-title">
         <h2 id="book-title" style="font-size:1.4rem">Book your place</h2>
-        <div class="places"><strong id="places-left">7</strong><span id="places-text">of 15 places left</span></div>
-        <div class="bar" aria-hidden="true"><span id="places-bar" style="width:53%"></span></div>
+        <p class="small-print" style="margin:0 0 16px">Places are limited to 15, so book early.</p>
         <ul class="when">
           <li><b>When</b><span>Sundays, 08:45 to 09:45<br>Starts 1 November 2026</span></li>
           <li><b>Where</b><span>Coastland Sports Centre, Weymouth</span></li>
@@ -281,7 +274,7 @@
   <!-- Final CTA -->
   <section class="cta">
     <div class="wrap">
-      <h2 id="cta-title">Places are filling up</h2>
+      <h2 id="cta-title">Book your free place</h2>
       <p>Free Sunday morning yoga with Fred, starting 1 November. Book now, or join the waiting list if we're full.</p>
       <div class="cta-actions">
         <a class="btn mail-link" href="#"><span class="mail-label">Book by email</span></a>
@@ -300,27 +293,11 @@
 </footer>
 
 <script>
-  /* ===== EDIT THIS NUMBER as bookings come in ===== */
-  var PLACES_BOOKED = 8;
-  var PLACES_TOTAL = 15;
-  /* ================================================= */
-
   (function(){
-    var left = Math.max(PLACES_TOTAL - PLACES_BOOKED, 0);
-    var full = left === 0;
-    var email = 'w%26p.pcn@dorsetgp.nhs.uk';
-    var subject = full ? 'Free yoga classes: waiting list' : 'Free yoga classes: booking';
-    var body = 'Hello,\n\nI would like to ' + (full ? 'join the waiting list for' : 'book a place on') +
-      ' the free yoga classes starting Sunday 1 November.\n\nMy name:\nMy GP practice:\nMy phone number:\n\nThank you.';
-    var href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
+    var subject = 'Free yoga classes: booking';
+    var body = 'Hello,\n\nI would like to book a place on the free yoga classes starting Sunday 1 November.\n\nMy name:\nMy GP practice:\nMy phone number:\n\nThank you.';
+    var href = 'mailto:w%26p.pcn@dorsetgp.nhs.uk?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     document.querySelectorAll('.mail-link').forEach(function(a){ a.href = href; });
-    document.querySelectorAll('.mail-label').forEach(function(s){ s.textContent = full ? 'Join the waiting list' : 'Book by email'; });
-
-    document.getElementById('places-left').textContent = full ? 'Full' : left;
-    document.getElementById('places-text').textContent = full ? 'Join the waiting list below' : (left === 1 ? 'place left of 15' : 'of 15 places left');
-    document.getElementById('places-bar').style.width = Math.min(PLACES_BOOKED / PLACES_TOTAL * 100, 100) + '%';
-    if (full) document.getElementById('cta-title').textContent = 'This class is full';
   })();
 </script>
 
