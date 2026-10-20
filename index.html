@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free Yoga Classes | Weymouth &amp; Portland Primary Care Network</title>
 <meta name="description" content="Six free, gentle Sunday morning yoga classes in Weymouth, taught by local NHS clinician Fred Burnham. No experience needed. Book by email or phone.">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-n9lROTb-pDuqch3egZf7Y.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 <!--
   EDITING NOTES (not shown on the page)
   Fred's photo is embedded in this file, so the page works as a single file on Netlify.
@@ -298,6 +304,23 @@
     var body = 'Hello,\n\nI would like to book a place on the free yoga classes starting Sunday 1 November.\n\nMy name:\nMy GP practice:\nMy phone number:\n\nThank you.';
     var href = 'mailto:w%26p.pcn@dorsetgp.nhs.uk?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     document.querySelectorAll('.mail-link').forEach(function(a){ a.href = href; });
+
+    // Plausible custom events: count booking clicks and where on the page they happened
+    function where(a){
+      if (a.closest('.book-card')) return a.closest('#waitlist-note') ? 'Booking card note' : 'Booking card';
+      if (a.closest('.cta')) return 'Bottom of page';
+      if (a.closest('header')) return 'Header';
+      return 'Other';
+    }
+    function track(name, a){
+      try { if (window.plausible) window.plausible(name, { props: { location: where(a) } }); } catch(e) {}
+    }
+    document.querySelectorAll('.mail-link').forEach(function(a){
+      a.addEventListener('click', function(){ track('Book by email', a); });
+    });
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(a){
+      a.addEventListener('click', function(){ track('Book by phone', a); });
+    });
   })();
 </script>
 
